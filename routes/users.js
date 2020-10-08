@@ -9,19 +9,19 @@ const users = [
 
     {id: 2,
     name: 'Samson Matic',
-    password: '23243lovfs'
+    password: '23243lfs'
     },
 
     {id: 3,
      name: 'David Mikeson',
-     password: '23243lovfs'}
+     password: '23243lov'}
 ]
 
-route.get('/api/users', (req, res) => {
+route.get('/', (req, res) => {
     res.send(users)
 })
 
-route.post('/api/users', (req, res) => {
+route.post('/', (req, res) => {
     
     const { error } = userValidation(req.body)
     if (error) return res.status(400).send(error.details[0].message)
@@ -34,7 +34,7 @@ route.post('/api/users', (req, res) => {
     res.send(user)
 })
 
-route.put('/api/users/:id', (req, res) => {
+route.put('/:id', (req, res) => {
     const user = users.find(user => user.id === parseInt(req.params.id))
     if (!user) return res.status(404).send('user with the given id does not exist.')
 
@@ -47,7 +47,7 @@ route.put('/api/users/:id', (req, res) => {
 
 })
 
-route.delete('/api/users/:id', (req, res) => {
+route.delete('/:id', (req, res) => {
     const user = users.find(user => user.id === parseInt(req.params.id))
     if (!user) return res.status(404).send('user with the given id does not exist.')
 
@@ -58,7 +58,7 @@ route.delete('/api/users/:id', (req, res) => {
 })
 
 
-route.get('/api/users/:id', (req, res) => {
+route.get('/:id', (req, res) => {
     const user = users.find(user => user.id === parseInt(req.params.id))
     if (!user) return res.status(404).send('user with the given id does not exist.')
     res.send(user)
