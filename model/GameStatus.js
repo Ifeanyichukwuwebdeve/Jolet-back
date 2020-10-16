@@ -1,4 +1,3 @@
-const { number } = require('joi')
 const mongoose = require('mongoose')
 const Schema = mongoose.Schema
 
@@ -9,4 +8,4 @@ const GameStatus = new Schema({
   answeredQuestions: { type: Number}
 })
 
-mongoose.model('GameStatus', GameStatus)
+mongoose.model('gameStatus', GameStatus)
