@@ -44,6 +44,10 @@ const UserSchema = new Schema({
   reffered: {
     type: String,
   },
+  status: {
+    isAdmin: false,
+    isOperators: false
+  },
   isVerified: {
     type: Boolean,
     default: false

@@ -5,7 +5,7 @@ const bcrypt = require('bcryptjs')
 const {
   auth: { hashPassword },
   jwt: { generateToken },
-  mailgun: { sendEmail }
+  // mailgun: { sendEmail }
 } = require('../utils')
 
 mongoose.set('debug', true)

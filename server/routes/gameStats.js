@@ -3,8 +3,7 @@ const mongoose  = require('mongoose')
 
 const route = express.Router()
 // Load gameStatus
-require('../model/GameStatus')
-const GameStatus = mongoose.model('gameStatus')
+const { GameStatus } = require('@model/GameStatus')
 
 const userStatus = {
   level: updateLevels(),
@@ -24,8 +23,6 @@ function updateAnswered() {
   
 }
  
-new GameStatus (userStatus)
-.save()
 
 route.get('/', (req, res) => {
   GameStatus.find({})
