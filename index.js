@@ -16,7 +16,8 @@ app.use('/', home)
 // Connect to mongoose
 mongoose.connect('mongodb://localhost/jolet-dev', { 
   useNewUrlParser: true,
-  useUnifiedTopology: true
+  useUnifiedTopology: true,
+  useCreateIndex: true
 })
 .then(() => console.log('Mongodb connected'))
 .catch(err => console.log(err))

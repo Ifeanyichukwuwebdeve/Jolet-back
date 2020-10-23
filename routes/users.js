@@ -1,6 +1,6 @@
-const Joi = require('joi')
+// const Joi = require('joi')
+const passport = require('passport')
 const express = require('express')
-const bcrypt = require('bcryptjs')
 const mongoose  = require('mongoose')
 
 const route = express.Router()
@@ -18,36 +18,40 @@ route.get('/', (req, res) => {
   })
 })
 
-route.post('/register', (req, res) => {
-    
-    const { error } = userValidation(req.body)
-    if (error) return res.status(400).send(error.details[0].message)
-
-    const newUser =  new User({
-        firstName: req.body.firstName,
-        lastName: req.body.lastName,
-        email: req.body.email,
-        password: req.body.password,
-        country: req.body.country,
-        phone: req.body.phone,
-        reffered: req.body.reffered
-    })
-    
-    bcrypt.genSalt(10, (error, salt => {
-      bcrypt.hash(newUser.password, salt, (err, hash) => {
-        if(err) throw err
-        newUser.password = hash
-        newUser.save()
-          .then(user => {
-            req.send(user)
-          })
-        .catch(err => {
-          console.log(err)
-          return
-        })
+route.post(
+  '/signup',
+    passport.authenticate('local', { session: false }),
+    async (req, res, next) => {
+      res.json({
+        message: 'Signup successful',
+        user: req.user
       })
-    }))
-})
+    }
+  )
+
+// route.post('/signup', (req, res) => {
+    
+//     const { error } = userValidation(req.body)
+//     if (error) return res.status(400).send(error.details[0].message)
+
+//     const newUser =  new User({
+//         firstName: req.body.firstName,
+//         lastName: req.body.lastName,
+//         email: req.body.email,
+//         password: req.body.password,
+//         country: req.body.country,
+//         phone: req.body.phone,
+//         reffered: req.body.reffered
+//     })
+//         newUser.save()
+//           .then(user => {
+//             res.send(user)
+//           })
+//         .catch(err => {
+//           console.log(err)
+//           return
+//         })
+// })
 
 route.put('/:id', (req, res) => {
     const user = users.find(user => user.id === parseInt(req.params.id))
@@ -85,47 +89,47 @@ route.get('/:id', (req, res) => {
     res.send(user)
 })
 
-const userValidation = (user) => {
-    const schema = Joi.object({
-        firstName: Joi.string()
-        .min(3)
-        .max(30)
-        .required(),
+// const userValidation = (user) => {
+//     const schema = Joi.object({
+//         firstName: Joi.string()
+//         .min(3)
+//         .max(30)
+//         .required(),
 
-        lastName: Joi.string()
-        .min(3)
-        .max(30)
-        .required(),
+//         lastName: Joi.string()
+//         .min(3)
+//         .max(30)
+//         .required(),
 
-        password: Joi.string()
-            .pattern(new RegExp('^[a-zA-Z0-9]{3,30}$')).required(),
+//         password: Joi.string()
+//             .pattern(new RegExp('^[a-zA-Z0-9]{3,30}$')).required(),
 
-        passwordRepeat: Joi.ref('password'),
+//         passwordRepeat: Joi.ref('password'),
 
-        access_token: [
-            Joi.string(),
-            Joi.number()
-        ],
-        country: Joi.string()
-          .min(3)
-          .max(30)
-          .required(),
+//         access_token: [
+//             Joi.string(),
+//             Joi.number()
+//         ],
+//         country: Joi.string()
+//           .min(3)
+//           .max(30)
+//           .required(),
 
-        phone: Joi.number()
-          .required(),
+//         phone: Joi.number()
+//           .required(),
 
-        reffered: Joi.string()
-          .min(3)
-          .max(30)
-          .required(),
+//         reffered: Joi.string()
+//           .min(3)
+//           .max(30)
+//           .required(),
 
-        email: Joi.string()
-            .email({ minDomainSegments: 2, tlds: { allow: ['com', 'net'] } })
-        })
+//         email: Joi.string()
+//             .email({ minDomainSegments: 2, tlds: { allow: ['com', 'net'] } })
+//         })
 
     
 
-    return schema.validate(user)
-}
+//     return schema.validate(user)
+// }
 
 module.exports = route
