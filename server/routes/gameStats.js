@@ -3,7 +3,7 @@ const mongoose  = require('mongoose')
 
 const route = express.Router()
 // Load gameStatus
-const { GameStatus } = require('@model/GameStatus')
+const { GameStatus } = require('@model')
 
 const userStatus = {
   level: updateLevels(),

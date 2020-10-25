@@ -14,6 +14,12 @@ if (process.env.NODE_ENV === 'production') {
     useUnifiedTopology: true,
     useCreateIndex: true
   })
+  .then((req, res) => {
+    console.log('Mongodb Connected')
+  })
+  .catch(err => {
+    console.log(err)
+  })
 }
 
 const GameStatus = require('./GameStatus')

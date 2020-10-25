@@ -6,7 +6,13 @@ const Schema = mongoose.Schema
 const GameStatus = new Schema({
   level:{ type: Number},
   joletCoin: { type: Number},
-  answeredQuestions: { type: Number}
-})
+  answeredQuestions: { type: Number},
+  createdBy: {
+    type: mongoose.Schema.Types.ObjectId,
+    required: true
+  },
+}, { timestamps: true })
 // GameStatus.plugin(mongoosePaginate)
-mongoose.model('gameStatus', GameStatus)
+const Games = mongoose.model('gameStatus', GameStatus)
+
+module.exports = Games

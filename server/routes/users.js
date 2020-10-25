@@ -1,7 +1,7 @@
 const express = require('express')
 const mongoose = require('mongoose')
 
-const { User, GameStatus } = require('@model')
+const { User } = require('@model/User')
 const bcrypt = require('bcryptjs')
 const { hashPassword } = require('../utils/auth')
 

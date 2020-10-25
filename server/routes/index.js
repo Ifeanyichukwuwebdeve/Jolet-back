@@ -10,7 +10,7 @@ const users = require('./users')
 
 // router.use('/curricula', curricula)
 // router.use('/curricula', authMiddleware, authCurricula)
-router.use('/count', game)
+router.use('/game', game)
 router.use('/auth', auth)
 router.use('/users', authMiddleware, users)
 

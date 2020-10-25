@@ -10,7 +10,8 @@ const {
 
 mongoose.set('debug', true)
 
-const { User, Verification } = require('@model')
+const { User } = require('@model')
+const { Verification } = require('@model')
 
 const router = express.Router()
 
@@ -29,7 +30,7 @@ router.route('/login')
 
       let payload = {
         id: user._id,
-        name: user.firstName + user.lastName,
+        name: user.firstName + ' ' + user.lastName,
         email: user.email,
         token
       }
@@ -39,10 +40,10 @@ router.route('/login')
       console.error(err)
     }
   })
+
 router.route('/register')
   .post(async (req, res) => {
     const { firstName, lastName, email, password, country, phone, reffered } = req.body
-    console.log(req.body)
 
     try {
       if (password.length >= 8) {
@@ -77,7 +78,7 @@ router.route('/register')
       }
     } catch(err) {
       console.error(err)
-      res.send(400)
+      res.sendStatus(400)
     }
   })
 

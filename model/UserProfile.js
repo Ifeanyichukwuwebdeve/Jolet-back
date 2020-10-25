@@ -19,10 +19,10 @@ const UserProfileSchema = new mongoose.Schema({
   bio: {
     type: String
   },
-  github: {
+  twitter: {
     type: String
   },
-  twitter: {
+  facebook: {
     type: String
   },
   linkedin: {
@@ -30,6 +30,11 @@ const UserProfileSchema = new mongoose.Schema({
   },
   website: {
     type: String
+  },
+  bank: {
+    type: String,
+    minLength: 3,
+    maxLength: 130
   }
 }, { timestamps: true })
 
