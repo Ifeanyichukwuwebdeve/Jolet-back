@@ -44,10 +44,12 @@ const UserSchema = new Schema({
     type: String,
   },
   isAdmin: {
-    type: false
+    type: Boolean,
+    default: false
   },
   isOperator: {
-    type: false
+    type: Boolean,
+    default: false
   },
   isVerified: {
     type: Boolean,

@@ -34,8 +34,6 @@ router.route('/login')
         email: user.email,
         token
       }
-
-      res.send(payload)
     } catch (err) {
       console.error(err)
     }
