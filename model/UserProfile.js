@@ -31,10 +31,18 @@ const UserProfileSchema = new mongoose.Schema({
   website: {
     type: String
   },
-  bank: {
+  bankName: {
     type: String,
     minLength: 3,
     maxLength: 130
+  },
+  bankAccount: {
+    type: String,
+    minLength: 3,
+  },
+  bankAccountType: {
+    type: String,
+    minLength: 3,
   }
 }, { timestamps: true })
 

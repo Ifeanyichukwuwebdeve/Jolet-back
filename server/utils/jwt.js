@@ -11,7 +11,7 @@ function generateToken(userId) {
     userId
   }
 
-  return jwt.sign({ data }, secret, { expiresIn: '7d' })
+  return jwt.sign({ data }, secret, { expiresIn: '30d' })
 }
 
 function decodeToken(token) {

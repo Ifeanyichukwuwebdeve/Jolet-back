@@ -1,6 +1,6 @@
 const mongoose = require('mongoose')
 const Schema = mongoose.Schema
-// const mongoosePaginate = require('mongoose-paginate-v2')
+const mongoosePaginate = require('mongoose-paginate-v2')
 
 // Create Schema
 const GameStatus = new Schema({
@@ -12,7 +12,7 @@ const GameStatus = new Schema({
     required: true
   },
 }, { timestamps: true })
-// GameStatus.plugin(mongoosePaginate)
+GameStatus.plugin(mongoosePaginate)
 const Games = mongoose.model('gameStatus', GameStatus)
 
 module.exports = Games

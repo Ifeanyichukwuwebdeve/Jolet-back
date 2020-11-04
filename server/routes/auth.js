@@ -10,8 +10,7 @@ const {
 
 mongoose.set('debug', true)
 
-const { User } = require('@model')
-const { Verification } = require('@model')
+const { User, Verification, GameStatus } = require('@model')
 
 const router = express.Router()
 
@@ -34,8 +33,10 @@ router.route('/login')
         email: user.email,
         token
       }
-    } catch (err) {
-      console.error(err)
+      res.send(payload)
+    }
+     catch (err) {
+        // console.log(err)
     }
   })
 
@@ -55,8 +56,24 @@ router.route('/register')
           phone,
           reffered
         })
+        if (user.email === User.findOne({ email })) {
+          res.statusCode(409).send('Email already exists')
+        }
+
         const userRes = await user.save()
         console.log(userRes)
+
+        const setLevel = 1
+        const setJoletCoin = 0
+        const setAnsweredQuestions = 0
+        const gameStatus = new GameStatus({
+          level: setLevel,
+          joletCoin: setJoletCoin,
+          answeredQuestions: setAnsweredQuestions,
+          createdBy: userRes._id
+        })
+        const game = await gameStatus.save()
+        console.log(game)
 
         const code = Math.floor(Math.random() * (999999 - 100000) + 100000)
         const verification = new Verification({
@@ -65,13 +82,14 @@ router.route('/register')
         })
         await verification.save()
 
-        const payload = {
-          code,
-          email
-        }
-        await sendEmail(payload)
-        res.send(201, { firstName, email })
-      } else {
+        // const payload = {
+        //   code,
+        //   email
+        // }
+        // await sendEmail(payload)
+        res.status(201).send({ firstName, email })
+      } 
+      else {
         res.send('Invalid credentials').status(400)
       }
     } catch(err) {
