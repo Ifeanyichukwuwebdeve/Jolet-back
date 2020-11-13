@@ -24,7 +24,8 @@ if (process.env.NODE_ENV !== 'production') {
 
 router.route('/:id/update-password')
   .post(async (req, res) => {
-    const { oldPassword, newPassword } = req.body
+    try {
+      const { oldPassword, newPassword } = req.body
 
     if (newPassword.length >= 8) {
       res.send(400)
@@ -40,8 +41,10 @@ router.route('/:id/update-password')
 
     user.password =  await hashPassword(newPassword)
     await user.save()
+    } catch (error) {
+      console.log(error)
+    }
 
-    res.send(200)
   })
 
 router.route('/:id')
@@ -52,12 +55,15 @@ router.route('/:id')
   })
   .patch(async (req, res) => {
     const userId = req.params.id
-    const { username, email } = req.body
+    const { firstName, lastName, email, country, phone } = req.body
 
     const user = await User.findById(userId)
 
+    if (firstName) user.firstName = firstName
+    if (lastName) user.lastName = lastName
     if (email) user.email = email
-    if (username) user.username = username
+    if (country) user.country = country
+    if (phone) user.phone = phone
 
     await user.save()
 
