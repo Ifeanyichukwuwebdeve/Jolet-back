@@ -3,7 +3,7 @@ const mongoose = require('mongoose')
 
 mongoose.set('debug', true)
 
-const { GameStatus} = require('@model')
+const { GameStatus, User} = require('@model')
 const {
   jwt: { decodeToken }
 } = require('../utils')
@@ -31,6 +31,20 @@ route.get('/', (req, res) => {
   })
   
 })
+
+route.route('/:id')
+  .get(async function (req, res) {
+    try {
+      const gamestatus = await GameStatus.findById(req.params.id)
+      // const gamestatus = await GameStatus.findById(gamestatus.createdBy)
+      console.log(gamestatus)
+      // gamestatus.createdBy = user._id
+
+      res.send({ gamestatus})
+    } catch (err) {
+      res.status(404).send(err)
+    }
+  })
 
 // route.get('/:id', (req, res) => {
 //   GameStatus.findOne({

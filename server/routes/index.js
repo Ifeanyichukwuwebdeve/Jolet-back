@@ -7,11 +7,14 @@ const authMiddleware = require('../middleware/auth')
 const game = require('./gameStats')
 const auth = require('./auth')
 const users = require('./users')
+const withdraw = require('./withdraw')
+
 
 // router.use('/curricula', curricula)
 // router.use('/curricula', authMiddleware, authCurricula)
-router.use('/game', game)
+router.use('/game', authMiddleware, game)
 router.use('/auth', auth)
+router.use('/withdraw', authMiddleware, withdraw)
 router.use('/users', authMiddleware, users)
 
 module.exports = router

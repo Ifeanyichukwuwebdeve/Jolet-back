@@ -24,10 +24,12 @@ if (process.env.NODE_ENV === 'production') {
 
 const GameStatus = require('./GameStatus')
 const User = require('./User')
+const Withdraw = require('./Withdraw')
 const Verification = require('./Verification')
 
 module.exports = {
   GameStatus,
   User,
+  Withdraw,
   Verification
 }

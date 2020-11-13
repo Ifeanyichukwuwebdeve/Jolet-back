@@ -42,7 +42,7 @@ router.route('/:id/update-password')
     await user.save()
 
     res.send(200)
-  })  
+  })
 
 router.route('/:id')
   .get(async (req, res) => {
@@ -64,7 +64,13 @@ router.route('/:id')
     res.send(201)
   })
   .delete(async (req, res) => {
-
+    try {
+      const userId = req.params.id
+    const user = await User.findById(userId).deleteOne({})
+    res.send(user)
+    } catch (error) {
+      console.log(error)
+    }
   })
 
 router.route('/')

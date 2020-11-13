@@ -29,8 +29,12 @@ router.route('/login')
 
       let payload = {
         id: user._id,
-        name: user.firstName + ' ' + user.lastName,
+        firstName: user.firstName,
+        lastName: user.lastName,
         email: user.email,
+        phone: user.phone,
+        country: user.country,
+        Game: user.userGame,
         token
       }
       res.send(payload)
@@ -60,9 +64,6 @@ router.route('/register')
           res.statusCode(409).send('Email already exists')
         }
 
-        const userRes = await user.save()
-        console.log(userRes)
-
         const setLevel = 1
         const setJoletCoin = 0
         const setAnsweredQuestions = 0
@@ -70,9 +71,12 @@ router.route('/register')
           level: setLevel,
           joletCoin: setJoletCoin,
           answeredQuestions: setAnsweredQuestions,
-          createdBy: userRes._id
+          createdBy: user._id
         })
         const game = await gameStatus.save()
+        user.userGame = game._id
+        const userRes = await user.save()
+        console.log(userRes)
         console.log(game)
 
         const code = Math.floor(Math.random() * (999999 - 100000) + 100000)
