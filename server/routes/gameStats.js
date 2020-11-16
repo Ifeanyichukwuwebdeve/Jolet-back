@@ -89,16 +89,17 @@ route.route('/:id/update-level',)
   .patch(async (req, res) => {
     try {
       const id = req.params.id
-      const index = req.body.answered
+      const {joletCoin, answeredQuestions} = req.body
       const userGame = await GameStatus.findById(id)
       checkIfAuthorizedUser(req, userGame)
-      userGame.answeredQuestions += index
-      userGame.joletCoin += index
+      userGame.answeredQuestions += answeredQuestions
+      userGame.joletCoin += joletCoin
       await userGame.save()
       res.send('Updated successfully')
     } 
     catch (error) {
       res.send(error)
+      console.log(error)
     }
   })
   

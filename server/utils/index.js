@@ -1,5 +1,5 @@
 module.exports = {
   auth: require('./auth'),
   jwt: require('./jwt'),
-  // mailgun: require('./mailgun')
+  mailgun: require('./mailgun')
 }

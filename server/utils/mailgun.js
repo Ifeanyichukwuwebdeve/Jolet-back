@@ -1,13 +1,13 @@
 var api_key = process.env.MAILGUN_KEY
-var domain = 'mg.studytracker.tech'
+var domain = process.env.DOMAIN
 var mailgun = require('mailgun-js')({apiKey: api_key, domain: domain})
  
 async function sendEmail(payload) {
   const { code, email } = payload
   var data = {
-    from: 'Admin <contact@studytracker.tech>',
+    from: 'Admin <kingifean@gmail.com>',
     to: email,
-    subject: `Curricula App Verification Code: ${code}`,
+    subject: `JoletQuiz App Verification Code: ${code}`,
     text: `Enter this code: ${code}`
   }
 

@@ -1,14 +1,15 @@
 var jwt = require('jsonwebtoken')
 
-const secret = 'joletquiz'
+const secret = process.env.JWT_SECRET
 const header = {
   typ: 'JWT',
   alg: 'HS512'
 }
 
-function generateToken(userId) {
+function generateToken(userId, isAdmin) {
   const data = {
-    userId
+    userId,
+    isAdmin
   }
 
   return jwt.sign({ data }, secret, { expiresIn: '30d' })

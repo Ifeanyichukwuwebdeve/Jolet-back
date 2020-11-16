@@ -5,7 +5,7 @@ const bcrypt = require('bcryptjs')
 const {
   auth: { hashPassword },
   jwt: { generateToken },
-  // mailgun: { sendEmail }
+  mailgun: { sendEmail }
 } = require('../utils')
 
 mongoose.set('debug', true)
@@ -25,7 +25,7 @@ router.route('/login')
         res.status(401).send('Invalid Login Credentials')
       }
 
-      const token = generateToken(user._id)
+      const token = generateToken(user._id, user.isAdmin)
 
       let payload = {
         id: user._id,
@@ -86,11 +86,11 @@ router.route('/register')
         })
         await verification.save()
 
-        // const payload = {
-        //   code,
-        //   email
-        // }
-        // await sendEmail(payload)
+        const payload = {
+          code,
+          email
+        }
+        await sendEmail(payload)
         res.status(201).send({ firstName, email })
       } 
       else {
