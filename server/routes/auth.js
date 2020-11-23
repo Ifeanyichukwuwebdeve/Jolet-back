@@ -35,6 +35,7 @@ router.route('/login')
         phone: user.phone,
         country: user.country,
         Game: user.userGame,
+        isAdmin: user.isAdmin,
         token
       }
       res.send(payload)
