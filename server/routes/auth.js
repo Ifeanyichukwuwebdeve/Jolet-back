@@ -36,12 +36,13 @@ router.route('/login')
         country: user.country,
         Game: user.userGame,
         isAdmin: user.isAdmin,
+        isVerified: user.isVerified,
         token
       }
       res.send(payload)
     }
      catch (err) {
-        // console.log(err)
+        console.log(err)
     }
   })
 
@@ -77,8 +78,8 @@ router.route('/register')
         const game = await gameStatus.save()
         user.userGame = game._id
         const userRes = await user.save()
-        console.log(userRes)
-        console.log(game)
+        // console.log(userRes)
+        // console.log(game)
 
         const code = Math.floor(Math.random() * (999999 - 100000) + 100000)
         const verification = new Verification({
@@ -120,6 +121,48 @@ router.route('/verify')
         res.status(400).send('Invalid Code')
       }
     } catch (err) {
+      res.status(400).send('Invalid Code')
+    }
+  })
+
+
+router.route('/forgot-password')
+  .post(async (req, res) => {
+    const { email } = req.body
+
+    try {
+      const user = await User.findOne({ email })
+      const verify = await Verification.findOne({ userId: user._id })
+
+      const payload = {
+        code: verify.code,
+        email: user.email
+      }
+      console.log(payload)
+      await sendEmail(payload)
+      res.send('Success')
+    } catch (err) {
+      // console.log(err)
+      res.status(400).send('Invalid Code')
+    }
+  })
+
+router.route('/reset-password')
+  .post(async (req, res) => {
+    const { password, code } = req.body
+
+    try {
+      const verify = await Verification.findOne({ code })
+      const _id = verify.userId
+      const user = await User.findOne({ _id })
+      if (password.length >= 6) {
+        const hash = await hashPassword(password)
+        user.password = hash
+        user.save()
+      }
+      res.send('Success')
+    } catch (err) {
+      // console.log((err))
       res.status(400).send('Invalid Code')
     }
   })

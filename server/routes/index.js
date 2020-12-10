@@ -15,7 +15,7 @@ const admin = require('./admin')
 // router.use('/curricula', authMiddleware, authCurricula)
 router.use('/game', authMiddleware, game)
 router.use('/auth', auth)
-router.use('/withdraw', withdraw)
+router.use('/withdraw', authMiddleware, withdraw)
 router.use('/users', authMiddleware, users)
 router.use('/admin', authMiddleware, admin)
 

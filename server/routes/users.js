@@ -47,6 +47,22 @@ router.route('/:id/update-password')
 
   })
 
+router.route('/updateAdmin/:id')
+  .patch(async (req, res) => {
+    try {
+      const userId = req.params.id
+      const user = await User.findById(userId)
+      const { isAdmin } = req.body
+      if (isAdmin) user.isAdmin = isAdmin
+      await user.save()
+
+      res.send(201)
+    } catch (error) {
+      console.log(error)
+      res.send(error)
+    }
+  })
+
 router.route('/:id')
   .get(async (req, res) => {
     const userId = req.params.id
