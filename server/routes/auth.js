@@ -23,25 +23,26 @@ router.route('/login')
       const isValid = await bcrypt.compare(password, user.password)
       if (!isValid) {
         res.status(401).send('Invalid Login Credentials')
-      }
+      } else {
+        const token = generateToken(user._id, user.isAdmin)
 
-      const token = generateToken(user._id, user.isAdmin)
-
-      let payload = {
-        id: user._id,
-        firstName: user.firstName,
-        lastName: user.lastName,
-        email: user.email,
-        phone: user.phone,
-        country: user.country,
-        Game: user.userGame,
-        isAdmin: user.isAdmin,
-        isVerified: user.isVerified,
-        token
+        let payload = {
+          id: user._id,
+          firstName: user.firstName,
+          lastName: user.lastName,
+          email: user.email,
+          phone: user.phone,
+          country: user.country,
+          Game: user.userGame,
+          isAdmin: user.isAdmin,
+          isVerified: user.isVerified,
+          token
+        }
+        res.send(payload)
       }
-      res.send(payload)
     }
      catch (err) {
+       res.send(err)
         console.log(err)
     }
   })

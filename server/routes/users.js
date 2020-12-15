@@ -47,13 +47,13 @@ router.route('/:id/update-password')
 
   })
 
-router.route('/updateAdmin/:id')
+router.route('/updateVerified/:id')
   .patch(async (req, res) => {
     try {
       const userId = req.params.id
       const user = await User.findById(userId)
-      const { isAdmin } = req.body
-      if (isAdmin) user.isAdmin = isAdmin
+      const { isVerified } = req.body
+      if (isVerified) user.isVerified = isVerified
       await user.save()
 
       res.send(201)
