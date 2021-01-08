@@ -3,7 +3,7 @@ const mongoose = require('mongoose')
 
 mongoose.set('debug', true)
 
-const { GameStatus, User} = require('@model')
+const { GameStatus, User } = require('@model')
 const {
   jwt: { decodeToken }
 } = require('../utils')
